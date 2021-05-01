@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class Facebook:
 
     def __init__(self, config, permutations_list):
@@ -13,13 +14,13 @@ class Facebook:
         # social
         self.type = config['plateform']['facebook']['type']
 
-    # Generate all potential facebook usernames
+    #  Generate all potential facebook usernames
     def possible_usernames(self):
         possible_usernames = []
 
         for permutation in self.permutations_list:
             possible_usernames.append(self.format.format(
-                permutation = permutation,
+                permutation=permutation,
             ))
         return possible_usernames
 
@@ -35,10 +36,10 @@ class Facebook:
                 r = requests.get(username)
             except requests.ConnectionError:
                 print("failed to connect to facebook")
-            
+
             # If the account exists
             if r.status_code == 200:
                 facebook_usernames["accounts"].append({"value": username})
             time.sleep(self.delay)
-        
+
         return facebook_usernames

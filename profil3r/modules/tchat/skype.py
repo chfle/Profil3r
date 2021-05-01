@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class Skype:
 
     def __init__(self, config, permutations_list):
@@ -12,20 +13,20 @@ class Skype:
         # tchat
         self.type = config['plateform']['skype']['type']
 
-    # Generate all potential skype usernames
+    #  Generate all potential skype usernames
     def possible_usernames(self):
         possible_usernames = []
 
         for permutation in self.permutations_list:
             possible_usernames.append(self.format.format(
-                permutation = permutation,
+                permutation=permutation,
             ))
         return possible_usernames
 
     def search(self):
         skype_usernames = {
             "type": self.type,
-            "accounts" : []
+            "accounts": []
         }
 
         skypli_URL = "https://www.skypli.com/profile/{}"
@@ -38,11 +39,11 @@ class Skype:
                 r = requests.get(skypli_formatted_URL)
             except requests.ConnectionError:
                 print("failed to connect to skype")
-            
+
             # If the account exists
             if r.status_code == 200:
                 skype_usernames["accounts"].append({"value": username})
 
             time.sleep(self.delay)
-        
+
         return skype_usernames

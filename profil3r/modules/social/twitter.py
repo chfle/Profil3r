@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class Twitter:
 
     def __init__(self, config, permutations_list):
@@ -21,16 +22,16 @@ class Twitter:
             "https://tweet.lambda.dance/{}"
         ]
 
-        #social
+        # social
         self.type = config['plateform']['twitter']['type']
 
-    # Generate all potential twitter usernames
+    #  Generate all potential twitter usernames
     def possible_usernames(self):
         possible_usernames = []
 
         for permutation in self.permutations_list:
             possible_usernames.append(self.format.format(
-                permutation = permutation,
+                permutation=permutation,
             ))
         return possible_usernames
 
@@ -44,7 +45,7 @@ class Twitter:
     def search(self):
         twitter_usernames = {
             "type": self.type,
-            "accounts" : []
+            "accounts": []
         }
 
         nitter_URL = self.get_nitter_instance()
@@ -57,7 +58,7 @@ class Twitter:
                 r = requests.get(nitter_formatted_URL)
             except requests.ConnectionError:
                 print("failed to connect to twitter")
-            
+
             # If the account exists
             if r.status_code == 200:
                 twitter_usernames["accounts"].append({"value": username})

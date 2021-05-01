@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class LinkTree:
 
     def __init__(self, config, permutations_list):
@@ -13,13 +14,13 @@ class LinkTree:
         # social
         self.type = config['plateform']['linktree']['type']
 
-    # Generate all potential linktree usernames
+    #  Generate all potential linktree usernames
     def possible_usernames(self):
         possible_usernames = []
 
         for permutation in self.permutations_list:
             possible_usernames.append(self.format.format(
-                permutation = permutation,
+                permutation=permutation,
             ))
         return possible_usernames
 
@@ -35,10 +36,10 @@ class LinkTree:
                 r = requests.get(username)
             except requests.ConnectionError:
                 print("failed to connect to linktree")
-            
+
             # If the account exists
             if r.status_code == 200:
                 linktree_usernames["accounts"].append({"value": username})
             time.sleep(self.delay)
-        
+
         return linktree_usernames

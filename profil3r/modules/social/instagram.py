@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class Instagram:
 
     def __init__(self, config, permutations_list):
@@ -12,20 +13,20 @@ class Instagram:
         # social
         self.type = config['plateform']['instagram']['type']
 
-    # Generate all potential instagram usernames
+    #  Generate all potential instagram usernames
     def possible_usernames(self):
         possible_usernames = []
 
         for permutation in self.permutations_list:
             possible_usernames.append(self.format.format(
-                permutation = permutation,
+                permutation=permutation,
             ))
         return possible_usernames
 
     def search(self):
         instagram_usernames = {
             "type": self.type,
-            "accounts" : []
+            "accounts": []
         }
 
         bibliogram_URL = "https://bibliogram.art/u/{}"
@@ -44,5 +45,5 @@ class Instagram:
                 instagram_usernames["accounts"].append({"value": username})
 
             time.sleep(self.delay)
-        
+
         return instagram_usernames

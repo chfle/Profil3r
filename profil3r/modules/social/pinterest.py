@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class Pinterest:
 
     def __init__(self, config, permutations_list):
@@ -13,13 +14,13 @@ class Pinterest:
         # social
         self.type = config['plateform']['pinterest']['type']
 
-    # Generate all potential pinterest usernames
+    #  Generate all potential pinterest usernames
     def possible_usernames(self):
         possible_usernames = []
 
         for permutation in self.permutations_list:
             possible_usernames.append(self.format.format(
-                permutation = permutation,
+                permutation=permutation,
             ))
         return possible_usernames
 
@@ -35,10 +36,10 @@ class Pinterest:
                 r = requests.get(username)
             except requests.ConnectionError:
                 print("failed to connect to pinterest")
-            
+
             # If the account exists
             if r.status_code == 200:
                 pinterest_usernames["accounts"].append({"value": username})
             time.sleep(self.delay)
-        
+
         return pinterest_usernames

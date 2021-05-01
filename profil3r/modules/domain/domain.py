@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 class Domain:
 
     def __init__(self, config, permutations_list):
@@ -10,21 +11,21 @@ class Domain:
         self.format = config['plateform']['domain']['format']
         # Top level domains
         self.tld = config['plateform']['domain']['TLD']
-        # domains are not case sensitive
+        #  domains are not case sensitive
         self.permutations_list = [perm.lower() for perm in permutations_list]
         # domain
         self.type = config['plateform']['domain']['type']
 
-    # Generate all potential domains names
+    #  Generate all potential domains names
     def possible_domains(self):
         possible_domains = []
 
-        # search all TLD (.com, .net, .org...), you can add more in the config.json file
+        #  search all TLD (.com, .net, .org...), you can add more in the config.json file
         for domain in self.tld:
             for permutation in self.permutations_list:
                 possible_domains.append(self.format.format(
-                    permutation = permutation,
-                    domain = domain
+                    permutation=permutation,
+                    domain=domain
                 ))
 
         return possible_domains
@@ -44,7 +45,7 @@ class Domain:
 
             # If the domain exists
             if r.status_code < 400:
-                domains_lists ["accounts"].append({"value": domain})
+                domains_lists["accounts"].append({"value": domain})
             time.sleep(self.delay)
-        
-        return domains_lists 
+
+        return domains_lists
