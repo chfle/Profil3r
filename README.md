@@ -36,9 +36,13 @@ sudo python3 setup.py install
 #### 📙 Domain
 - [x] TLD (.com, .org, .net, etc...)
 
+Note: to use other domains, change the `domains.txt` file
+
 #### ✉️ Emails 
 - [x] Data leaks
 - [x] Emails
+
+Note: to use other emails domains change the `email_domains.txt` file
 
 #### 🌐 Social
 - [x] Instagram

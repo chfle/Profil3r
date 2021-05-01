@@ -10,7 +10,11 @@ class Domain:
         # {permutation}.{tld}
         self.format = config['plateform']['domain']['format']
         # Top level domains
-        self.tld = config['plateform']['domain']['TLD']
+        self.tld = []
+
+        # can be used with a file with domain names
+        with open("domains.txt", 'r') as file:
+            self.tld = file.readlines()
         #  domains are not case sensitive
         self.permutations_list = [perm.lower() for perm in permutations_list]
         # domain
@@ -20,12 +24,12 @@ class Domain:
     def possible_domains(self):
         possible_domains = []
 
-        #  search all TLD (.com, .net, .org...), you can add more in the config.json file
         for domain in self.tld:
             for permutation in self.permutations_list:
                 possible_domains.append(self.format.format(
                     permutation=permutation,
-                    domain=domain
+                    # must remove \n
+                    domain=domain.strip("\n")
                 ))
 
         return possible_domains
@@ -40,12 +44,12 @@ class Domain:
         for domain in possible_domains_list:
             try:
                 r = requests.head(domain, timeout=5)
-            except requests.ConnectionError:
+            except (requests.ConnectionError, requests.exceptions.ReadTimeout):
                 pass
-
-            # If the domain exists
-            if r.status_code < 400:
-                domains_lists["accounts"].append({"value": domain})
+            else:
+                # If the domain exists
+                if r.status_code < 400:
+                    domains_lists["accounts"].append({"value": domain})
             time.sleep(self.delay)
 
         return domains_lists
